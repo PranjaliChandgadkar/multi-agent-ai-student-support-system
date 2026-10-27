@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="760" viewBox="0 0 1120 760" role="img" aria-labelledby="title desc">
+<title id="title">Multi-Agent AI Student Support System — conceptual architecture</title>
+<desc id="desc">Student query to IBM watsonx Orchestrate orchestrator, routing to Visa Support Agent with RAG knowledge retrieval or Career Support Agent, then returning a response.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10" fill="none" stroke="#52677b" stroke-width="1.7"/></marker></defs>
+<rect width="1120" height="760" rx="20" fill="#f7fafc"/>
+<text x="560" y="50" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#15283c">Multi-Agent AI Student Support System</text>
+<text x="560" y="78" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#53677b">Conceptual architecture · IBM watsonx training project</text>
+<rect x="380" y="104" width="360" height="82" rx="14" fill="#fff" stroke="#9fb4c8" stroke-width="2"/>
+<text x="560" y="137" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="700" fill="#1a344e">Student / End User</text>
+<text x="560" y="164" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#53677b">Visa or career-related query</text>
+<path d="M560 186 V232" stroke="#52677b" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="290" y="237" width="540" height="116" rx="16" fill="#e8f1ff" stroke="#3478c6" stroke-width="2.5"/>
+<text x="560" y="270" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#245e9d">IBM watsonx Orchestrate</text>
+<text x="560" y="302" text-anchor="middle" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#173c69">Orchestrator Agent</text>
+<text x="560" y="328" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#496b91">Intent identification · Agent routing</text>
+<path d="M560 353 V380 H275 V411" stroke="#52677b" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<path d="M560 380 H845 V411" stroke="#52677b" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<rect x="75" y="416" width="400" height="172" rx="16" fill="#e7f6f1" stroke="#269078" stroke-width="2.5"/>
+<text x="275" y="454" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#146c59">Visa Support Agent</text>
+<text x="275" y="480" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#397b6c">Visa questions and information guidance</text>
+<rect x="118" y="505" width="314" height="61" rx="10" fill="#fff" stroke="#89c6b5"/>
+<text x="275" y="530" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#146c59">RAG Retrieval</text>
+<text x="275" y="551" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#397b6c">Visa knowledge base + LLM response</text>
+<rect x="645" y="416" width="400" height="172" rx="16" fill="#f1edfc" stroke="#8a6cc6" stroke-width="2.5"/>
+<text x="845" y="454" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#6544a5">Career Support Agent</text>
+<text x="845" y="480" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#765e9e">Career advice and job preparation</text>
+<rect x="688" y="505" width="314" height="61" rx="10" fill="#fff" stroke="#b5a5da"/>
+<text x="845" y="531" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#6544a5">LLM-Based Guidance</text>
+<text x="845" y="552" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#765e9e">Contextual student assistance</text>
+<path d="M275 588 V622 H560 V652" stroke="#52677b" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<path d="M845 588 V622 H560" stroke="#52677b" stroke-width="2.5" fill="none"/>
+<rect x="360" y="657" width="400" height="62" rx="14" fill="#fff" stroke="#9fb4c8" stroke-width="2"/>
+<text x="560" y="683" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#1a344e">Student Support Response</text>
+<text x="560" y="705" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#53677b">Answer returned to student</text>
+<text x="560" y="747" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#68798a">Documentation diagram · Not a verified deployment topology</text>
+</svg>
