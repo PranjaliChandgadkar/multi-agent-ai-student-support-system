@@ -1,53 +1,56 @@
-# Multi-Agent AI Student Support System using IBM watsonx
+# Multi-Agent AI Student Support System
 
-**IBM SkillsBuild Hackathon | Pace University | December 2025**  
-**Achievement: 2nd Place**
+Native Windows Python application using FastAPI, Streamlit and a custom Python orchestrator. All three agents use the installed `granite4.2:3b` through Ollama. No WSL or agent framework is required.
 
-> **Repository status:** Project documentation only. The original implementation was developed in a restricted training environment and its source code is not currently accessible. An independent implementation may be added later.
+## Project background
 
-## Overview
+This project was originally intended to use IBM watsonx. This implementation runs locally on Windows, using IBM Granite through the Ollama API instead of the IBM watsonx cloud service. The orchestrator, visa support and career support agents all use the local model; no IBM watsonx account or API credentials are required.
 
-This project explored a multi-agent AI approach to supporting students with visa-related questions and career guidance. An orchestrator routes a student's request to a specialised support agent, enabling a focused response.
+## Setup in PowerShell
 
-## System Architecture
+Run from this project directory. The `.venv` environment is already provisioned in this workspace; these commands also reproduce it on another Windows machine with Python installed.
 
-![Conceptual multi-agent architecture](docs/architecture.svg)
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
 
-*Figure 1. Conceptual architecture reconstructed from the original project description; not an export of the original watsonx environment.*
+Activation is optional; using the explicit interpreter avoids PowerShell execution policy changes. Ollama must already be running on `http://localhost:11434` with `granite4.2:3b` installed.
 
-## Agents
+For the exact validated dependency versions, install with `-r requirements-lock.txt` instead.
 
-| Component | Responsibility |
-| --- | --- |
-| **Orchestrator Agent** | Understands student intent and routes requests to the relevant agent. |
-| **Visa Support Agent** | Uses retrieval-augmented generation (RAG) to provide contextual answers from a visa-information knowledge base. |
-| **Career Support Agent** | Provides career guidance and job-preparation support. |
+## Run
 
-## Example Interaction Flow
+Backend, in one PowerShell terminal:
 
-1. A student submits a visa or career-related question.
-2. The orchestrator identifies the intent and selects an agent.
-3. The selected agent prepares an answer; the visa agent uses retrieval from a knowledge base.
-4. The answer is returned to the student.
+```powershell
+.\.venv\Scripts\python.exe -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
+```
 
-## Technologies and Concepts
+Frontend, in a second terminal in the same project:
 
-- IBM watsonx / watsonx Orchestrate (original training context)
-- Multi-agent AI orchestration
-- Large language models (LLMs)
-- Retrieval-augmented generation (RAG)
-- Natural-language query routing
+```powershell
+.\.venv\Scripts\python.exe -m streamlit run frontend/app.py --server.address 127.0.0.1
+```
 
-## Recognition
+Open `http://localhost:8501`. API documentation is at `http://127.0.0.1:8000/docs`. `GET /health` checks model availability; `POST /chat` accepts `{"message":"Help me prepare for an interview"}` and returns `agent`, `answer`, `citations` and `model`.
 
-**2nd Place — IBM SkillsBuild Hackathon, Pace University (December 2025).**
+Optional environment variables: `SUPPORT_OLLAMA_URL`, `SUPPORT_MODEL`, `SUPPORT_TIMEOUT`, `SUPPORT_KNOWLEDGE_DIR`, and `SUPPORT_API_URL` (frontend). Backend settings may also go in a local `.env` file. Restart after changes.
 
-## Availability and Future Work
+## Knowledge and behavior
 
-The original source code and training environment are not available for public release. This repository currently provides architecture and project documentation, not a runnable application.
+Visa support now focuses on international students applying to study in the USA, initially F-1. Two reviewed State Department summaries cover application preparation and DS-160. See [the USA student guide](docs/USA_STUDENT_GUIDE.md), [source register](docs/USA_SOURCE_REGISTER.md), and `data/visa/README.md` for scope and source ingestion. Employment, status and travel rules are not yet covered. Restart FastAPI after source changes. Retrieval runs locally without an extra embedding model. The visa agent abstains on missing evidence or invalid citations. Citation presence does not guarantee factual entailment; review sources and answers before real immigration decisions.
 
-Potential future work includes independently rebuilding the orchestrator and specialised agents, implementing retrieval, adding an interface, and providing reproducible setup and evaluation instructions.
+The orchestrator asks Granite to choose visa, career or clarification using structured JSON. Mixed questions ask the student to separate topics. The career agent supplies CV, job search and interview guidance. This initial version handles each query independently; the UI displays history but does not send prior turns to the model. No authentication, rate limiting or durable conversation storage is included; keep it on localhost. Avoid entering sensitive personal information.
 
-## Disclaimer
+## Verification
 
-This is a personal project documentation repository, not an official IBM or Pace University repository. The architecture diagram is conceptual and should not be interpreted as a verified export of the original deployment. Visa information supplied by any future implementation should be checked against official sources and should not be treated as legal advice.
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q
+.\.venv\Scripts\python.exe -m tests.integration_granite
+.\.venv\Scripts\python.exe -m tests.integration_usa
+```
+
+The second command invokes real Granite through the API application's lifecycle. It checks model availability, both specialist routes, career generation, and visa grounding with a temporary fictional policy. It does not install sources or download models. Allow several minutes on a CPU.
+
+The third command tests US visa-interview routing and citations from the bundled State Department sources using real Granite.
